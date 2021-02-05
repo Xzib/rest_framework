@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="parent">
+        <button onclick="showData()">fetch</button>
+        <div id=data>
+
+        </div>
+    </div>
+
+    <script>
+    
+        async function showData(){
+            console.log('inside function')
+            const response = await fetch('http://127.0.0.1:8000/manufacturer',{
+                                        method: 'GET',
+                                        headers:{
+                                            'Content-Type':'application/json'
+                                            },
+                                        
+                                        });
+            let result = value(await response.json()) ;
+        }
+
+        function value(arr){
+            let out;
+            let i;
+            const detailList = document.createElement('ul');
+            let childelem = [];
+            for(i=0;i<arr.length;i++){
+                let x = document.createElement('li');
+                x.innerHTML = arr[i].name;
+                childelem.push(x);       
+            }
+            for(i=0;i<childelem.length;i++){
+                detailList.appendChild(childelem[i]);
+            }
+            const divb = document.getElementById('data')
+            const currentDiv = document.getElementById('parent');
+            currentDiv.insertBefore(detailList,divb);
+        }
+
+
+        
+        
+    </script>
+</body>
+</html>
+
+
